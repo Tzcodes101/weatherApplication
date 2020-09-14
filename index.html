@@ -7,88 +7,32 @@
     <title>What's the Weather?</title>
 
     <!--link to fontawesome-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
 
     <!--link to bootstrap-->
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <!--Link to my CSS stylesheet-->
-    <link rel="stylesheet" type="text/css" href="styles.css">
 
 </head>
 
 <body>
-    <!--Weather dashboard jumbotron jumbotron-fluid-->
-    <h1 class="jumbotron">Weather Dashboard</h1>
+    <!--Header, style fluid/text-center/padding-->
+        <!--h1-->
 
-    <!--activate grid system-->
-    <div id="one" class="container">
-        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-9 col-xs-9">
+    <!--activate grid system, fluid containers-->
+        <!--row1-->
+            <!--first column as an aside-->
+                <!--Search for city, input, search button-->
 
-            <div class="card">
-                <div class="card-body">
+                <!--create ul element to place search history into-->
 
-                    <!--row 1 is search for city input, fontawesome for search button?-->
-                    <div class="row">
-                        <h4>Search for a City:</h4>
-
-                        <!--should this be a nav?-->
-                        <nav class="navbar navbar-light bg-light">
-                            <form class="form-inline">
-                                <input id="search" class="form-control mr-sm-2" type="search" placeholder="Search"
-                                    aria-label="Search">
-                                <i class="fas fa-search my-2 my-sm-0" id="search-btn"
-                                    class="fas fa-search btn btn-outline-success my-2 my-sm-0" type="submit"></i>
-                                <!--Original search button from bootstrap... do I need the type="submit"?-->
-                                <!-- <button id="search-btn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
-                            </form>
-                        </nav>
-                    </div>
-                </div>
-
-                <div class="row">
-
-                    <!--row 2 shows city suggestions (based on previous user input... local storage?-->
-                    <div id="search-history" class="card-body">
-                        text
-                        <!--Insert search history here using js-->
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+            <!--second column as a main-->
+                <!--div for current weather-->
+                <!--div for future weather-->
 
 
 
-    <!--2nd column (9 columns total) with 3 rows-->
-    <div id="two" class="container">
-        <div class="card">
-            <div class="card-body">
-                <div class="col-xL-8 col-lg-8 col-md-6 col-sm-9 col-xs-9">
-
-                    <!--row 1 is search for city input, fontawesome for search button?-->
-                    <div class="row">
-                        <!--row 1 is the header with current date (moment.js)and cityy from "search for city input"-->
-
-                        <!--row 2 features temp, humidity, wind speed, and UV index of desired city for the current day (how get trid of " " after using JSON.stringify on the response object?)-->
-                        <!--UV index value with background color depending on severity, need id to target in CSS-->
-
-                        <!--row 3 has a header of a 5-day forecast and then:-->
-                        <!--5 columns showing the forecast for the next five days (from desired city)-->
-
-                        <!--Each day displays the future forecast
-                        - the future date (moment.js, look up how to do this)
-                        - An icon of the weather (use fontawesome to set classes, and js to change them depending on input from API.... ask for help here, use TIME SMARTLY!)
-                        - humidity -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!--link to jQuery library-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
