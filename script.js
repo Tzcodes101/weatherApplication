@@ -9,7 +9,7 @@ $(document).ready(function () {
         var searchValue = $(this).siblings("#search-value").val();
         
         //make a row
-        makeRow(searchValue);
+        // makeRow(searchValue);
 
         //call searchWeather function
         searchWeather(searchValue);
@@ -24,8 +24,7 @@ $(document).ready(function () {
 
     //add to search history (makeRow function)
     function makeRow(text) {
-        var text = $("#search-value").val();
-        console.log(text);
+        
         var liEl = $("<li>").addClass("list-group-item list-group-item-action").text(text);
         $(".history").append(liEl);
     };
@@ -33,11 +32,11 @@ $(document).ready(function () {
     //search for weather
     function searchWeather(searchValue) {
         //set search value to input of user 
-        var searchValue = $("#search-value").val();
-        console.log(searchValue);
+        // var searchValue = $("#search-value").val();
+        // console.log(searchValue);
 
         // add searchValue to history if it is not already there 
-        if (history.indexOf(searchValue) === -1) {
+        if (history.indexOf(searchValue) === -1 && searchValue !== "") {
             history.push(searchValue);
             console.log(history);
             window.localStorage.setItem("history", JSON.stringify(history));
@@ -71,12 +70,60 @@ $(document).ready(function () {
                 card.append(cardBody);
                 $("#today").append(card);
 
+                //call other endpoint functions
+                obtainForecast(searchValue);
+
         }
         });
 
     }
 
-    //obtain the forecast
+    // obtain the forecast
+    function obtainForecast(searchValue) {
+        console.log(searchValue);
+        $.ajax({
+            type: "GET",
+            url: "http://api.openweathermap.org/data/2.5/forecast?q=" + searchValue +"&appid=5eb9383515eca97bbbb3054d2a28b4fa",
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                //overwrite previous info with a title and empty row
+                var heading = $("<h4>").addClass("mt-3").text("5-day Forecast");
+                var row = $("<div>").addClass("row");
+                $("#forecast").html(heading, row);
+
+                console.log(data.list);
+                
+
+                //loop over forecasts in 3-hour intervals
+                for (var i = 0; i < data.list.length; i++) {
+                    //around 3 pm
+                    if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+                        //create html for bootstrap cards
+                        var col = $("<div>").addClass("col-md-2");
+                        var card = $("<div>").addClass("card bg-primary text-white");
+                        var body = $("<div>").addClass("card-body p-2");
+
+                        var title = $("<h5>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
+                        console.log(title);
+
+                        var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.list[i].weather.icon + "&appid=5eb9383515eca97bbbb3054d2a28b4fa");
+
+                        var p1 = $("<p>").addClass("card-text").text("Temp: " + data.list[i].main.temp_max + " F");
+
+                        var p2 = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.temp_max + "%");
+
+                        //combine and put on page
+                        body.append(title, img, p1, p2);
+                        card.append(body);
+                        col.append(card);
+                        $("#forecast .row").append(col);
+
+                    }
+                }
+            }
+        })
+    }
 
     //obtain UV index
 
@@ -85,14 +132,14 @@ $(document).ready(function () {
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!! when load page:
     //get current history from local storage, if any
     var history = JSON.parse(window.localStorage.getItem("history")) || [];
+    console.log(history);
 
     if (history.length > 0) {
         searchWeather(history[history.length - 1]);
     }
-    console.log(history);
 
     for (var i = 0; i < history.length; i++) {
-        makeRow(hisotry[i]);
+        makeRow(history[i]);
     }
 
 
