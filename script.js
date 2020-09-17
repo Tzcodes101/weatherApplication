@@ -43,6 +43,7 @@ $(document).ready(function () {
             url: "https://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=5eb9383515eca97bbbb3054d2a28b4fa",
             dataType: "json",
             success: function (data) {
+                console.log(data);
                 // add searchValue to history if it is not already there 
                 if (history.indexOf(searchValue) === -1 && searchValue !== "") {
                     history.push(searchValue);
@@ -65,10 +66,13 @@ $(document).ready(function () {
                 var tempK = data.main.temp;
                 var tempF = Math.round(((tempK - 273.15) * 9) / 5 + 32);
                 var temp = $("<p>").addClass("card-text").text("Temperature: " + tempF + " °F");
-                // var img = $("<img>").attr("src", "http://openweather.org/img/w/" + data.weather[0].icon + "&appid=5eb9383515eca97bbbb3054d2a28b4fa").attr("alt", "weather-icon");
+
+                //create img icon
+                var img = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon + ".png").attr("alt", "weather-icon");
+                
 
                 //combine then add to page
-                // title.append(img);
+                title.append(img);
                 cardBody.append(title, temp, humid, wind);
                 card.append(cardBody);
                 $("#today").append(card);
@@ -103,21 +107,19 @@ $(document).ready(function () {
                         var col = $("<div>").addClass("col-md-2");
                         var card = $("<div>").addClass("card bg-primary text-white");
                         var body = $("<div>").addClass("card-body p-2");
-
                         var title = $("<h5>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
-
-
-                        // var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + "&appid=5eb9383515eca97bbbb3054d2a28b4fa").attr("alt", "weather-icon");
+                        var img = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + ".png").attr("alt", "weather-icon");
 
                         //convert from kelvin to F    
                         var tempK = data.list[i].main.temp_max;
                         var tempF = Math.round(((tempK - 273.15) * 9) / 5 + 32);
 
+                        //access temp and humidity
                         var p1 = $("<p>").addClass("card-text").text("Temp: " + tempF + " °F");
-
                         var p2 = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + "%");
 
-                        col.append(card.append(body.append(title, p1, p2)));
+                        //combine and display on page
+                        col.append(card.append(body.append(title, img, p1, p2)));
                         $("#forecast .row").append(col);
 
                     }
@@ -146,6 +148,7 @@ $(document).ready(function () {
                     btn.addClass("btn-danger");
                 }
 
+                //combine and display to page
                 $("#today .card-body").append(uvIndex.append(btn));
 
             }
